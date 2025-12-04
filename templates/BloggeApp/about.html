@@ -1,0 +1,99 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8" />
+  <title>
+  {% block title %}
+    About
+  {% endblock title %}
+  </title>
+
+  <!--Meta For No Index-->
+  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Theme Stylesheet -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon" />
+  <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon" />
+</head>
+
+<body>
+<!-- Navbar Start -->
+{% include 'BloggeApp/includes/header.html' %}
+
+<!-- Main Content-->
+{% block content %}
+
+<section class="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="about-me"><img src="{% static 'images/about/actior.png' %}" alt="image">
+          <h3>Hi I Am Mary Astor</h3>
+          <p>Hi, I’m Mary Astor. I’ve always been the kind of person who enjoys learning new things and pushing myself into spaces I never imagined I would explore. I’m curious by nature, a bit adventurous at heart, and I genuinely love connecting with people. Over the years, I’ve realized that everything I’ve learned — whether big or small — has shaped the person I’m becoming. This website is one of those milestones in my journey.</p>
+
+
+
+          <div class="banner">
+            <div class="about-shape-right-top">
+              <img src="{% static 'images/about/blob1.svg' %}" alt="svg">
+            </div>
+            <div class="about-shape-left-bottom">
+              <img src="{% static 'images/about/blob2.svg' %}" alt="svg">
+            </div>
+            <img src="{% static 'images/about/banner.png' %}" alt="banner">
+          </div>
+            <p>This website isn’t just a project — it’s a reflection of where I am right now and where I’m heading. I plan to keep adding to it as I learn more, grow more, and challenge myself with new ideas. I want this space to be honest, warm, and open, the kind of place that feels real and personal. If you’re visiting, thank you for taking the time to read my story. I hope, in some small way, you find something here that speaks to you or encourages you to start your own journey.</p>
+
+            <p>There’s still so much I want to explore, and I’m excited about every step ahead. This is only the beginning, and I can’t wait to see how far this path will take me. Feel free to look around, follow my updates, or check in again later. I’m grateful you’re here.</p>
+          <ul class="soicel-icon">
+            <li>
+              <a href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a>
+            </li>
+            <li>
+              <a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a>
+            </li>
+            <li>
+              <a href="https://instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
+            </li>
+            <li>
+              <a href="https://linkedin.com" target="_blank"><i class="fa fa-linkedin"></i></a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+
+
+<!-- Footer-->
+{% include 'BloggeApp/includes/footer.html' %}
+
+
+
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9rV6yesIygoVKTD6QLf_iCa9eiIIHqZ0&libraries=geometry">
+</script>
+<!-- Vendor JS -->
+<script src="vendor/jQuery/jquery.min.js"></script>
+<script src="vendor/bootstrap/bootstrap.min.js"></script>
+<script src="vendor/slick/slick.min.js"></script>
+<script src="vendor/g-map/gmap.js"></script>
+<!-- Main JS -->
+<script src="js/script.js"></script>
+</body>
+
+</html>

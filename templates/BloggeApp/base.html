@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+          <meta charset="utf-8" />
+          <title>{% block title %}
+          {% endblock title %}</title>
+
+          <!--Meta For No Index-->
+          <meta name="robots" content="noindex, Nofollow, Noimageindex">
+
+          <!-- mobile responsive meta -->
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+          <!-- Theme Stylesheet -->
+          <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+          <!--Favicon-->
+          <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon" />
+          <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon" />
+</head>
+
+<body>
+
+         <!-- Navbar Start -->
+         {% include 'BloggeApp/includes/header.html' %}
+               
+         <!-- Main Content-->
+         {% block content %}
+          
+         {% endblock %}
+
+         <!-- Footer-->
+         {% include 'BloggeApp/includes/footer.html' %}
+
+
+
+
+<!-- Google Map -->
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9rV6yesIygoVKTD6QLf_iCa9eiIIHqZ0&libraries=geometry">
+</script>
+
+<!-- Vendor JS -->
+<script src="{% static 'vendor/jQuery/jquery.min.js' %}"></script> 
+<script src="{% static 'vendor/bootstrap/bootstrap.min.js' %}"> </script>
+<script src="{% static 'vendor/slick/slick.min.js' %}"></script>
+<script src="{% static 'vendor/g-map/gmap.js' %}"></script>
+
+<!-- Main JS -->
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

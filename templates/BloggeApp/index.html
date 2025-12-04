@@ -1,0 +1,245 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}
+    Home
+  {% endblock title %}</title>
+
+  <!--Meta For No Index-->
+  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Theme Stylesheet -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon" />
+  <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon" />
+</head>
+
+<body> 
+
+             <!-- Navbar Start -->
+             {% include 'BloggeApp/includes/header.html' %}
+
+
+
+            <section class="featured">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+
+                    {% if top_post %}
+                    <article class="featured-post">
+                      <div class="featured-post-content">
+
+                        <div class="featured-post-author">
+                          <img src="{% static 'images/author.png' %}" alt="author" />
+                          <p>By <span>{{ top_post.author }}</span></p>
+                        </div>
+
+                        <!-- Link to Single Blog -->
+                        <a href="{% url 'single_blog' top_post.slug %}" class="featured-post-title">
+                          {{ top_post.title }}
+                        </a>
+
+                        <ul class="featured-post-meta">
+                          <li>
+                            <i class="fa fa-clock-o"></i>
+                            {{ top_post.created_at|date:"F j, Y" }} - {{ top_post.reading_time }} min read
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="featured-post-thumb">
+                        {% if top_post.image %}
+                        <img src="{{ top_post.image.url }}" alt="{{ top_post.title }}" />
+                        {% else %}
+                        <img src="{% static 'images/featured-post.jpg' %}" alt="feature-post-thumb" />
+                        {% endif %}
+                      </div>
+                    </article>
+
+                    {% else %}
+                    <p>No featured post yet.</p>
+                    {% endif %}
+
+                  </div>
+                </div>
+              </div>
+            </section>
+
+
+
+            <!-- Main Content-->
+            {% block content %}
+
+            <section class="blog">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <div class="blog-section-title">
+                      <h2>Articles</h2>
+                      <p>View the latest news on Blogger</p>
+                    </div>
+
+                    {% for post in posts %}
+                    <article class="blog-post">
+                      <div class="blog-post-thumb">
+                            <a href="{% url 'single_blog' post.slug %}">
+                                <img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'images/featured-post.jpg' %}{% endif %}" 
+                                     alt="{{ post.title }}">
+                            </a>
+                      </div>
+
+                      <div class="blog-post-content">
+                        <div class="blog-post-tag">
+                          <a href="{% url 'category' post.category %}">
+                            {{ post.get_category_display }}
+                          </a>
+                        </div>
+
+                        <div class="blog-post-title">
+                          <a href="{% url 'single_blog' post.slug %}">
+                            {{ post.title }}
+                          </a>
+                        </div>
+
+                        <div class="blog-post-meta">
+                          <ul>
+                            <li>By <a href="{% url 'about' %}">{{ post.author }}</a></li>
+                            <li>
+                              <i class="fa fa-clock-o"></i>
+                              {{ post.created_at|date:"F d, Y" }} - {{ post.reading_time }} min
+                            </li>
+                          </ul>
+                        </div>
+
+                        <p>
+                          {{ post.content|truncatewords:13|safe }}
+                        </p>
+
+                        <a href="{% url 'single_blog' post.slug %}" class="blog-post-action">
+                          Read more <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </article>
+                    {% empty %}
+                    <p>No blog posts yet.</p>
+                    {% endfor %}
+
+                      <div class="blog-post-pagination">
+                        <nav aria-label="Page navigation example" class="nav-bg">
+                          <ul class="pagination">
+
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                <i class="fa fa-angle-left"></i>
+                              </a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                              {% if num == page_obj.number %}
+                                <li class="page-item active">
+                                  <a class="page-link active" href="#">{{ num }}</a>
+                                </li>
+                              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                  <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                              {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                              <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                <i class="fa fa-angle-right"></i>
+                              </a>
+                            </li>
+                            {% endif %}
+
+                          </ul>
+                        </nav>
+                      </div>
+
+                  </div>
+                  <div class="col-lg-4">
+
+                      {% if trending %}
+                      <div class="blog-post-widget">
+                        <div class="latest-widget-title">
+                          <h2>Trending Post</h2>
+                        </div>
+
+                        {% for post in trending %}
+                        <div class="latest-widget">
+                          <div class="latest-widget-thum">
+                            <a href="{% url 'single_blog' post.slug %}">
+                              {% if post.image %}
+                              <img src="{{ post.image.url }}" alt="blog image" />
+                              {% endif %}
+                            </a>
+
+                            <div class="icon">
+                              <a href="{% url 'single_blog' post.slug %}">
+                                <img src="{% static 'images/blog/icon.svg' %}" alt="icon" />
+                              </a>
+                            </div>
+                          </div>
+
+                          <div class="latest-widget-content">
+                            <div class="content-title">
+                              <a href="{% url 'single_blog' post.slug %}">
+                                {{ post.title }}
+                              </a>
+                            </div>
+
+                            <div class="content-meta">
+                              <ul>
+                                <li>
+                                  <i class="fa fa-clock-o"></i>
+                                  {{ post.created_at|date:"F d, Y" }} - {{ post.reading_time }} min
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+
+                      {% else %}
+                      <p>No trending post yet.</p>
+                      {% endif %}
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            {% endblock %}
+
+
+
+            <!-- Footer-->
+            {% include 'BloggeApp/includes/footer.html' %}
+
+<!-- Google Map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9rV6yesIygoVKTD6QLf_iCa9eiIIHqZ0&libraries=geometry">
+</script>
+<!-- Vendor JS -->
+<script src="{% static 'vendor/jQuery/jquery.min.js' %}"></script> 
+<script src="{% static 'vendor/bootstrap/bootstrap.min.js' %}"> </script>
+<script src="{% static 'vendor/slick/slick.min.js' %}"></script>
+<script src="{% static 'vendor/g-map/gmap.js' %}"></script>
+<!-- Main JS -->
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

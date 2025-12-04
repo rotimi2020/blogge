@@ -1,0 +1,138 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}
+    Contact
+  {% endblock title %}</title>
+
+  <!--Meta For No Index-->
+  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Theme Stylesheet -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon" />
+  <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon" />
+</head>
+
+<body>
+
+         <!-- Navbar Start -->
+         {% include 'BloggeApp/includes/header.html' %}
+               
+         {% block content %}
+
+<section class="contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="contact-information">
+          <h2>Contact Me</h2>
+            <p>If you’d like to reach out, feel free to contact me anytime. I’m always open to questions, ideas, or simple conversations. Whether you want to share feedback, connect, or ask about my work, I’m happy to hear from you and reply as soon as I can.</p>
+
+          <ul>
+            <li><i class="fa fa-map-marker" aria-hidden="true"></i>
+              <p>Address: Lorem 142 Str., 2352, Ipsum, State, USA</p>
+            </li>
+            <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:+33-257634 534">Phone: +33-257634 534</a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="contact-form">
+          {% if messages %}
+            <div class="alert alert-success" style="margin-bottom: 20px;">
+              {% for message in messages %}
+                <p>{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <h2>Contact Form</h2>
+          <form class="row" method="post">
+            {% csrf_token %}
+
+
+            <div class="col-md-6">
+              <input type="text" class="form-control" name="name" id="exampleFormControlInput1"  placeholder="Your Name" value="{{ form.name.value|default:'' }}">
+                    {% if form.name.errors %}
+                      <p style="color:red">{{ form.name.errors.0 }}</p>
+                    {% endif %}
+                   
+            </div>
+            <div class="col-md-6">
+              <input type="email" class="form-control" name="email" id="validationCustom02"  placeholder="Your Email" value="{{ form.email.value|default:'' }}">
+                    {% if form.email.errors %}
+                      <p style="color:red">{{ form.email.errors.0 }}</p>
+                    {% endif %}   
+            </div>
+
+            <div class="col-md-12">
+              <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="8"
+                 placeholder="Message here…">{{ form.message.value|default:'' }}</textarea>
+                    {% if form.message.errors %}
+                      <p style="color:red">{{ form.message.errors.0 }}</p>
+                    {% endif %}    
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck" 
+                name="is_clicked" >
+                <label class="form-check-label" for="gridCheck">
+                  I agree that my submitted data is being collected and stored.
+                </label>
+                    {% if form.is_clicked.errors %}
+                      <p style="color:red">{{ form.is_clicked.errors.0 }}</p>
+                    {% endif %}    
+            </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </div>
+          </form>
+          <p class="contact-form-generator">
+            <strong>** </strong> <a>Static website forms</a>
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div id="map">
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
+
+            {% endblock %}
+
+
+            <!-- Footer-->
+            {% include 'BloggeApp/includes/footer.html' %}
+
+
+
+
+<!-- Vendor JS -->
+<script src="vendor/jQuery/jquery.min.js"></script>
+<script src="vendor/bootstrap/bootstrap.min.js"></script>
+<script src="vendor/slick/slick.min.js"></script>
+<script src="vendor/g-map/gmap.js"></script>
+<!-- Main JS -->
+<script src="js/script.js"></script>
+</body>
+
+</html>

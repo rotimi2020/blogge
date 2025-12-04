@@ -1,0 +1,124 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8" />
+  <title>{{ post.title }}</title>
+
+  <meta name="robots" content="noindex, Nofollow, Noimageindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon" />
+</head>
+
+<body>
+
+        <!-- Navbar Start -->
+       {% include 'BloggeApp/includes/header.html' %}
+
+      <!-- Main Content-->
+       {% block content %}
+          <section class="blog-single">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-2 order-2 order-lg-1">
+                  <div class="share-now">
+                    <a href="#" class="scrol">Share</a>
+                    <div class="sociel-icon">
+                      <ul>
+                      <li>
+                        <a href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a>
+                      </li>
+                      <li>
+                        <a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a>
+                      </li>
+                      <li>
+                        <a href="https://instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
+                      </li>
+                      <li>
+                        <a href="https://linkedin.com" target="_blank"><i class="fa fa-linkedin"></i></a>
+                      </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-10 order-1 order-lg-2">
+                  <article class="single-blog">
+
+                    <!-- CATEGORY TAG -->
+                    <a class="tag" href="#">{{ post.category }}</a>
+
+                    <!-- TITLE -->
+                    <p class="title">{{ post.title }}</p>
+
+                    <!-- META INFO -->
+                    <ul class="meta">
+                      <li>By Admin</li>
+                      <li>
+                        <i class="fa fa-clock-o"></i>
+                        {{ post.created_at|date:"F d, Y" }} - {{ post.reading_time }} min
+                      </li>
+                    </ul>
+
+                    <!-- FEATURED IMAGE -->
+                    {% if post.image %}
+                      <img src="{{ post.image.url }}" alt="post image">
+                    {% else %}
+                      <img src="{% static 'images/blog/default.png' %}" alt="default image">
+                    {% endif %}
+
+                    <!-- MAIN CONTENT -->
+                    <p>{{ post.content|safe }}</p>
+
+                  </article>
+                  
+                          <div class="blog-single-presentation">
+                            <ul>
+
+                              {# -------- PREVIOUS POST -------- #}
+                              {% if previous_post %}
+                                <li>
+                                  <a href="{% url 'single_blog' previous_post.slug %}" class="tag">Previous</a>
+                                  <a href="{% url 'single_blog' previous_post.slug %}" class="title">
+                                    {{ previous_post.title }}
+                                  </a>
+                                  <i class="fa fa-clock-o"></i>
+                                  {{ previous_post.created_at|date:"F d, Y" }} - {{ previous_post.read_time }} min
+                                </li>
+                              {% endif %}
+
+                              {# -------- NEXT POST -------- #}
+                              {% if next_post %}
+                                <li>
+                                  <a href="{% url 'single_blog' next_post.slug %}" class="tag">Next</a>
+                                  <a href="{% url 'single_blog' next_post.slug %}" class="title">
+                                    {{ next_post.title }}
+                                  </a>
+                                  <i class="fa fa-clock-o"></i>
+                                  {{ next_post.created_at|date:"F d, Y" }} - {{ next_post.read_time }} min
+                                </li>
+                              {% endif %}
+
+                            </ul>
+                          </div>
+
+                </div>
+
+              </div>
+            </div>
+          </section>
+                 {% endblock %}
+
+                 <!-- Footer-->
+                 {% include 'BloggeApp/includes/footer.html' %}
+
+
+<script src="vendor/jQuery/jquery.min.js"></script>
+<script src="vendor/bootstrap/bootstrap.min.js"></script>
+<script src="vendor/slick/slick.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
