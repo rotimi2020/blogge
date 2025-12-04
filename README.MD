@@ -12,7 +12,7 @@ A Django-based blog application with user authentication and content management.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/projectblog.git
+git clone https://github.com/rotimi2020/blogge.git
 cd projectblog
 ```
 
